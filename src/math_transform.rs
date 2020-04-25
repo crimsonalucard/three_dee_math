@@ -7,6 +7,7 @@ use matrix4::matrix4::{Matrix4, create_translation_matrix};
 use quaternion::quaternion::{Quaternion, normalize};
 use crate::math_transform::matrix4::matrix4::{identity, create_scale_matrix};
 use std::intrinsics::sqrtf64;
+use crate::math_transform::quaternion::quaternion::conjugate;
 
 pub fn matrix_vector_transform(v: Vector3, m: Matrix4) -> Vector3 {
     let mut result = zero();
@@ -107,6 +108,21 @@ fn matrix_to_quaternion(m: Matrix4) -> Quaternion {
         y: qy,
         z: qz
     })
+}
+
+fn transform(v: Vector3, q: Quaternion) -> Vector3 {
+    let qr = q * Quaternion{
+        w: 0.0,
+        x: v.x,
+        y: v.y,
+        z: v.z
+    } * conjugate(q);
+    Vector3{
+        x: qr.x,
+        y: qr.y,
+        z: qr.z
+
+    }
 }
 
 
