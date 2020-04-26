@@ -1,6 +1,6 @@
-pub mod vector3;
-pub mod matrix4;
-pub mod quaternion;
+mod matrix4;
+mod quaternion;
+mod vector3;
 
 use vector3::vector3::{Vector3, zero};
 use matrix4::matrix4::{Matrix4, create_translation_matrix};
@@ -106,22 +106,21 @@ fn matrix_to_quaternion(m: Matrix4) -> Quaternion {
         w: qw,
         x: qx,
         y: qy,
-        z: qz
+        z: qz,
     })
 }
 
 fn transform(v: Vector3, q: Quaternion) -> Vector3 {
-    let qr = q * Quaternion{
+    let qr = q * Quaternion {
         w: 0.0,
         x: v.x,
         y: v.y,
-        z: v.z
+        z: v.z,
     } * conjugate(q);
-    Vector3{
+    Vector3 {
         x: qr.x,
         y: qr.y,
-        z: qr.z
-
+        z: qr.z,
     }
 }
 
